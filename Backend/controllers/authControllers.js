@@ -1,6 +1,9 @@
 import User from "../models/User.js"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 
+
+//signup user
 export const signupUser = async (req, res)=>{
   try{
     const {name, email, password} = req.body
@@ -28,3 +31,40 @@ export const signupUser = async (req, res)=>{
     res.status(500).json({message: "Server error", error})
   }
 }
+
+// Login User
+export const loginUser = async(req, res)=>{
+  try{
+    const {email, password} = req.body;
+
+    //check if user already exists
+    const userFound = await User.findOne({email});
+    if(!userFound){
+      return res.status(400).json({message: "User not found "})
+    }
+
+    //compare password
+    const matchPassword = await bcrypt.compare(password, userFound.password)
+    if(!matchPassword){
+      return res.status(400).json({message: "Invalid credentials"})
+    }
+
+    //generate JWT token
+    const token = jwt.sign(
+      {id: userFound.id},
+      process.env.JWT_SECRET,
+      {expiresIn: "7d"}
+    )
+    res.json({
+      message: "Login successful",
+      token,
+      user:{
+        id: userFound._id,
+        name: userFound.name,
+        email: userFound.email
+      }
+    })
+  }
+  catch(error){
+  res.status(500).json({message: "Server error", error})
+}}
