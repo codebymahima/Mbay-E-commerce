@@ -34,7 +34,7 @@ const EditProduct = () => {
 
   const handleSubmit = async(e)=>{
     e.preventDefault()
-    await api.put(`/products/edit/${id}`, form)
+    await api.put(`/products/update/${id}`, form)
     alert("Product updated successfully")
     navigate("/admin/products")
   }

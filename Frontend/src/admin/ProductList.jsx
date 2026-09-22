@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import api from "../api/axios"
 
 const ProductList = () => {
   const [products, setProducts] = useState([])
@@ -42,13 +43,13 @@ const deletedProduct = async (id) =>{
           </thead>
           <tbody>
             {products.map((product)=>(
-              <tr key={product.id} className='text-center'>
+              <tr key={product._id} className='text-center'>
               <td className='border border-gray-200 px-4 py-2'>{product.title}</td>
               <td className='border border-gray-200 px-4 py-2'>{product.price}</td>
               <td className='border border-gray-200 px-4 py-2'>{product.stock}</td>
               <td className='border border-gray-200 px-4 py-2'>
-                <Link to={`/admin/products/edit/${product.id}`} className='text-white px-4 py-2 rounded hover:bg-blue-600'>Edit</Link>
-                <button onClick={()=>deletedProduct(product.id)} className='text-red-500 hover:underline'>Delete</button>
+                <Link to={`/admin/products/edit/${product._id}`} className='text-white px-4 py-2 rounded hover:bg-blue-600'>Edit</Link>
+                <button onClick={()=>deletedProduct(product._id)} className='text-red-500 hover:underline'>Delete</button>
               </td>
               </tr>
             )
