@@ -8,7 +8,8 @@ const CartSchema = new mongoose.Schema({
     required: true
 
   },
-  items: {
+  items: [
+    {
     productId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
@@ -19,8 +20,9 @@ const CartSchema = new mongoose.Schema({
       required: true,
       default: 1
     }
-
   }
+
+  ]
 })
 
 export default mongoose.model('Cart', CartSchema)

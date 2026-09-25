@@ -8,6 +8,6 @@ const router = express.Router()
 router.post('/add', addToCart)
 router.post('/remove', removeItem)
 router.post('/update', updateQuantity)
-router.post('/:userId', getCart)
+router.get('/:userId', getCart)
 
 export default router
